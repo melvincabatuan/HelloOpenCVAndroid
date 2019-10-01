@@ -105,14 +105,12 @@ class MainActivity : Activity(), CameraBridgeViewBase.CvCameraViewListener2 {
     override fun onCameraViewStopped() {}
 
     override fun onCameraFrame(inputFrame: CameraBridgeViewBase.CvCameraViewFrame): Mat {
-        val result = Mat()
-
-        adaptiveThresholdFromJNI(inputFrame.gray().nativeObjAddr, result.nativeObjAddr)
-
-        return result
+        val img = inputFrame.gray()
+        adaptiveThresholdFromJNI(img.nativeObjAddr)
+        return img
     }
 
-    private external fun adaptiveThresholdFromJNI(input: Long, output: Long)
+    private external fun adaptiveThresholdFromJNI(imgGray: Long)
 
     companion object {
 
